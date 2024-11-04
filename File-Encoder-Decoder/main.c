@@ -2,10 +2,10 @@
 #include <string.h>
 #define SIZE 101
 
-void encode(const char *inputFile)
+void encode(char *inputFile)
 {
     FILE *input = fopen(inputFile, "r");
-    FILE *output = fopen("Encoded.txt", "w");
+    FILE *output = fopen(strcat(inputFile, ".EN"), "w");
 
     if (input == NULL || output == NULL)
     {
@@ -30,7 +30,10 @@ void encode(const char *inputFile)
 void decode(const char *inputFile)
 {
     FILE *input = fopen(inputFile, "r");
-    FILE *output = fopen("Decoded.txt", "w");
+    char name[50];
+    printf("Enter your file name you want with extension: ");
+    scanf("%s", name);
+    FILE *output = fopen(name, "w");
 
     if (input == NULL || output == NULL)
     {
