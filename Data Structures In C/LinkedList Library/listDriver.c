@@ -1,5 +1,5 @@
-#include"LinkedList.c"
-#include<stdio.h>
+#include "LinkedList.c"
+#include <stdio.h>
 
 int input()
 {
@@ -20,7 +20,7 @@ int inputPos()
 int main()
 {
     int choice, size = 0;
-    list* head = NULL, * node;
+    list *head = NULL, *node;
 
     do
     {
@@ -41,7 +41,8 @@ int main()
         case 2:
             node = head;
             int data;
-            for (int i = 1; i <= size; i++) {
+            for (list *temp = head; temp; temp = temp->next)
+            {
                 printf("Enter Data: ");
                 scanf("%d", &data);
                 node = insertLL(node, data);
@@ -72,7 +73,7 @@ int main()
             head = reverseLL(head);
             break;
         case 11:
-            for (list* temp = head; temp; temp = temp->next)
+            for (list *temp = head; temp; temp = temp->next)
                 printf("%d ", temp->data);
             printf("\n");
             break;
@@ -87,7 +88,6 @@ int main()
             break;
         }
     } while (choice);
-
 
     return 0;
 }
