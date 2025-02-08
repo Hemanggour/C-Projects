@@ -12,7 +12,6 @@ This project implements a simple memory management system in C, providing custom
 Memory-Manager/
 │── memoryManager.c     # Contains memory management functions
 │── tests.c             # Contains test cases for memory management
-│── main.c              # (Optional) Entry point for testing
 │── README.md           # Documentation
 ```
 
