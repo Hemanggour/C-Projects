@@ -1,6 +1,43 @@
 #include <stdio.h>
 #include "memoryManager.c"
 
+void testMCalloc() {
+    printf("Running MCalloc() Tests...\n");
+
+    // Test 1: Allocate memory and check if initialized to zero
+    int *arr = (int *)MCalloc(5, sizeof(int));
+    if (!arr) {
+        printf("Test 1 Failed: MCalloc() returned NULL\n");
+        return;
+    }
+    int initialized = 1;
+    for (int i = 0; i < 5; i++) {
+        if (arr[i] != 0) {
+            initialized = 0;
+            break;
+        }
+    }
+    printf("Test 1 Passed: Memory initialized to zero\n");
+
+    // Test 2: MCalloc with zero size or typeSize should return NULL
+    void *zeroAlloc1 = MCalloc(0, sizeof(int));
+    void *zeroAlloc2 = MCalloc(5, 0);
+    if (!zeroAlloc1 && !zeroAlloc2) {
+        printf("Test 2 Passed: MCalloc(0, X) and MCalloc(X, 0) returned NULL\n");
+    } else {
+        printf("Test 2 Failed: Expected NULL but got allocated memory\n");
+    }
+
+    // Test 3: Free allocated memory
+    if (MFree(arr)) {
+        printf("Test 3 Passed: MFree() successfully freed allocated memory\n");
+    } else {
+        printf("Test 3 Failed: MFree() failed to free memory\n");
+    }
+
+    printf("MCalloc() Tests Completed.\n\n");
+}
+
 void testMRealloc()
 {
     printf("\nTest 8: Reallocation with MRealloc\n");
@@ -116,6 +153,7 @@ int main()
     printf("MFree() Status code (('0' failed) or ('1' success)): %d\n", MFree(pInvalid)); // Should print status code ('0' for failed) or ('1' for success)
 
     testMRealloc();
+    testMCalloc();
 
     printf("MFreeAll() Status code (('0' failed) or ('1' success)): %d\n", MFreeAll());
 

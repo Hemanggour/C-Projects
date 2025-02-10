@@ -58,6 +58,11 @@ void *MMalloc(size_t size)
     if (!mallocMemory)
         return NULL;
     MemoryBlock *block = getMemoryBlock();
+    if (!block)
+    {
+        free(mallocMemory);
+        return NULL;
+    }
     block->size = size;
     block->memory = mallocMemory;
     if (!MemoryBlockHead)
@@ -68,6 +73,31 @@ void *MMalloc(size_t size)
         MemoryBlockTail = block;
     }
     return mallocMemory;
+}
+
+void *MCalloc(size_t size, size_t typeSize)
+{
+    if (!(size && typeSize))
+        return NULL;
+    void *callocMemory = calloc(size, typeSize);
+    if (!callocMemory)
+        return NULL;
+    MemoryBlock *block = getMemoryBlock();
+    if (!block)
+    {
+        free(callocMemory);
+        return NULL;
+    }
+    block->size = size * typeSize;
+    block->memory = callocMemory;
+    if (!MemoryBlockHead)
+        MemoryBlockHead = MemoryBlockTail = block;
+    else
+    {
+        MemoryBlockTail->next = block;
+        MemoryBlockTail = block;
+    }
+    return callocMemory;
 }
 
 int MFree(void *ptr)

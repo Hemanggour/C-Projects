@@ -4,6 +4,8 @@
 This project implements a simple memory management system in C, providing custom memory allocation and deallocation functions to track allocated memory blocks. It includes the following functionalities:
 
 - `MMalloc(size_t size)`: Allocates memory and tracks it.
+- `MCalloc(size_t size, size_t typeSize)`: Allocates zero-initialized memory and tracks it.
+- `MRealloc(void* ptr, size_t size)`: Reallocates a previously allocated memory block.
 - `MFree(void* ptr)`: Frees a specific allocated memory block.
 - `MFreeAll()`: Frees all allocated memory blocks.
 
@@ -21,6 +23,8 @@ This file contains the implementation of memory management functions:
 - `MemoryBlock` struct: Stores metadata about allocated memory.
 - `getMemoryBlock()`: Allocates memory for a new block.
 - `MMalloc(size_t size)`: Custom memory allocation function.
+- `MCalloc(size_t size, size_t typeSize)`: Custom memory allocation function for zero-initialized memory.
+- `MRealloc(void* ptr, size_t size)`: Resizes an existing allocated memory block.
 - `MFree(void* ptr)`: Frees a specific memory block.
 - `MFreeAll()`: Frees all allocated memory blocks.
 
@@ -55,9 +59,11 @@ int main() {
 ```
 
 ## Notes
-- Ensure proper use of `MFree()` and `MFreeAll()` to prevent memory leaks.
-- The `MFree()` and `MFreeAll()` functions returns a status code __0__ and __1__.
-- _0_ for Failed to free memory and _1_ for successfully freed memory.
+- Ensure proper use of `MFree()`, `MRealloc()`, and `MFreeAll()` to prevent memory leaks.
+- The `MFree()` and `MFreeAll()` functions return a status code __0__ and __1__.
+- _0_ for failed to free memory and _1_ for successfully freed memory.
+- `MCalloc()` ensures memory is initialized to zero before use.
+- `MRealloc()` resizes an existing memory block while preserving its contents.
 
 ## License
 This project is open-source and free to use under the MIT License.
