@@ -27,7 +27,7 @@ MemoryBlock *getMemoryBlock()
 
 void *MRealloc(void *ptr, size_t size)
 {
-    if (size == 0)
+    if (!size)
     {
         MFree(ptr);
         return NULL;
