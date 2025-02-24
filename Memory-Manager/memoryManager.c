@@ -7,7 +7,7 @@ typedef struct MemoryBlock
     struct MemoryBlock *next;
 } MemoryBlock;
 
-MemoryBlock *getMemoryBlock();
+MemoryBlock *getMemoryBlock(void);
 int MFreeAll(void);
 int MFree(void *);
 void *MMalloc(size_t);
@@ -16,7 +16,7 @@ void *MRealloc(void *, size_t);
 
 MemoryBlock *MemoryBlockHead = NULL, *MemoryBlockTail = NULL;
 
-MemoryBlock *getMemoryBlock()
+MemoryBlock *getMemoryBlock(void)
 {
     MemoryBlock *block = (MemoryBlock *)malloc(sizeof(MemoryBlock));
     if (!block)
@@ -127,7 +127,7 @@ int MFree(void *ptr)
     return 0;
 }
 
-int MFreeAll()
+int MFreeAll(void)
 {
     MemoryBlock *temp = MemoryBlockHead;
     while (MemoryBlockHead)
