@@ -10,11 +10,12 @@ typedef struct MemoryBlock
 typedef struct LeakInfo
 {
     size_t size;
+    size_t leakCount;
     void *address;
 } LeakInfo;
 
 MemoryBlock *getMemoryBlock(void);
-LeakInfo *MGetLeaks(size_t *);
+LeakInfo *MGetLeaks(void);
 int MFreeAll(void);
 int MFree(void *);
 void *MMalloc(size_t);
@@ -147,17 +148,17 @@ int MFreeAll(void)
     return ((!MemoryBlockHead) ? 1 : 0);
 }
 
-LeakInfo *MGetLeaks(size_t *sizePtr)
+LeakInfo *MGetLeaks(void)
 {
     size_t actualSize = 0, index = 0;
     for (MemoryBlock *i = MemoryBlockHead; i; i = i->next)
         actualSize++;
-    *sizePtr = actualSize;
     if (!actualSize)
         return NULL;
     LeakInfo *leaks = (LeakInfo *)malloc(actualSize * sizeof(LeakInfo));
     if (!leaks)
-        return NULL;
+    return NULL;
+    leaks->leakCount = actualSize;
     for (MemoryBlock *i = MemoryBlockHead; i; i = i->next, index++)
     {
         leaks[index].address = i->memory;

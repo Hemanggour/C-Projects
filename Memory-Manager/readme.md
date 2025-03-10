@@ -8,7 +8,7 @@ This project implements a simple memory management system in C, providing custom
 - `MRealloc(void* ptr, size_t size)`: Reallocates a previously allocated memory block.
 - `MFree(void* ptr)`: Frees a specific allocated memory block.
 - `MFreeAll()`: Frees all allocated memory blocks.
-- `MGetLeaks(size_t *sizePtr)`: Returns an array of `LeakInfo` structures containing information about memory leaks.
+- `MGetLeaks()`: Returns an array of `LeakInfo` structures containing information about memory leaks.
 
 ## File Structure
 ```
@@ -28,7 +28,7 @@ This file contains the implementation of memory management functions:
 - `MRealloc(void* ptr, size_t size)`: Resizes an existing allocated memory block.
 - `MFree(void* ptr)`: Frees a specific memory block.
 - `MFreeAll()`: Frees all allocated memory blocks.
-- `MGetLeaks(size_t *sizePtr)`: Returns an array of `LeakInfo` structures containing information about memory leaks.
+- `MGetLeaks()`: Returns an array of `LeakInfo` structures containing information about memory leaks.
 
 ### tests.c
 This file contains test cases to validate the functionality of the memory manager.
@@ -64,10 +64,9 @@ int main() {
     for (int i = 5; i < 10; i++)
         arr[i] = i + 1;
 
-    size_t size;
-    LeakInfo *leaks = MGetLeaks(&size);
+    LeakInfo *leaks = MGetLeaks();
 
-    for (size_t i = 0; i < size; i++)
+    for (size_t i = 0; i < leaks->leakCount; i++)
         printf("Leak %zu: Address: %p, Size: %zu bytes\n", i + 1, leaks[i].address, leaks[i].size);
 
     free(leaks); // Don't forget to free the array when done
@@ -84,7 +83,6 @@ int main() {
 - `MCalloc()` ensures memory is initialized to zero before use.
 - `MRealloc()` resizes an existing memory block while preserving its contents.
 - `MGetLeaks()` helps in detecting memory leaks by providing information about unfreed memory blocks.
-- `MGetLeaks()` takes a pointer to a `size_t` variable (`sizePtr`) and assigns the number of leaks to it.
 - Remember to free the leaks array using `free()` after use to avoid memory leaks.
 
 ## License
