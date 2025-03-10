@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct MemoryBlock
@@ -13,6 +14,7 @@ int MFree(void *);
 void *MMalloc(size_t);
 void *MCalloc(size_t, size_t);
 void *MRealloc(void *, size_t);
+void **MGetLeaks(size_t);
 
 MemoryBlock *MemoryBlockHead = NULL, *MemoryBlockTail = NULL;
 
@@ -138,4 +140,20 @@ int MFreeAll(void)
         temp = MemoryBlockHead;
     }
     return ((!MemoryBlockHead) ? 1 : 0);
+}
+
+void **MgetLeaks(size_t *size)
+{
+    size_t actualSize = 0, index = 0;
+    for (MemoryBlock *i = MemoryBlockHead; i; i = i->next)
+        actualSize++;
+    *size = actualSize;
+    if (!actualSize)
+        return NULL;
+    void **leakes = malloc(actualSize * sizeof(void *));
+    if (!leakes)
+        return NULL;
+    for (MemoryBlock *i = MemoryBlockHead; i; i = i->next, index++)
+        leakes[index] = i->memory;
+    return leakes;
 }
