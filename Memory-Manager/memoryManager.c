@@ -13,7 +13,7 @@ int MFree(void *);
 void *MMalloc(size_t);
 void *MCalloc(size_t, size_t);
 void *MRealloc(void *, size_t);
-void **MGetLeaks(size_t);
+void **MGetLeaks(size_t *);
 
 MemoryBlock *MemoryBlockHead = NULL, *MemoryBlockTail = NULL;
 
@@ -141,7 +141,7 @@ int MFreeAll(void)
     return ((!MemoryBlockHead) ? 1 : 0);
 }
 
-void **MgetLeaks(size_t *size)
+void **MGetLeaks(size_t *size)
 {
     size_t actualSize = 0, index = 0;
     for (MemoryBlock *i = MemoryBlockHead; i; i = i->next)
