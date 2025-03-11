@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -50,14 +49,12 @@ void vectorPushBack(Vector *vec, void *data)
     if (!vec)
         return;
 
-    // Check if resize is needed
     if (vec->size >= vec->capacity) {
         size_t newCapacity = vec->capacity * INCREAMENT;
         if (!vectorResize(vec, newCapacity))
             return;
     }
 
-    // Copy new element
     memcpy((char *)vec->data + (vec->size * vec->elementSize), 
            data, 
            vec->elementSize);
@@ -66,11 +63,9 @@ void vectorPushBack(Vector *vec, void *data)
 
 void vectorPopBack(Vector *vec)
 {
-    // printf("Pop: %x\n", vec->data);
     if (!vec)
         return;
     vec->size--;
-    // printf("Poped!!\n");
 }
 
 Vector *vectorResize(Vector *vec, size_t newCapacity)
@@ -80,18 +75,15 @@ Vector *vectorResize(Vector *vec, size_t newCapacity)
     if (!vec)
         return NULL;
 
-    // Allocate new memory block
     void *newMemory = malloc(newCapacity * vec->elementSize);
     if (!newMemory)
         return NULL;
 
-    // Copy existing data to new memory block
     if (vec->data) {
         memcpy(newMemory, vec->data, vec->size * vec->elementSize);
-        free(vec->data);  // Free old memory using free
+        free(vec->data);
     }
 
-    // Update vector
     vec->data = newMemory;
     vec->capacity = newCapacity;
     return vec;
