@@ -11,14 +11,15 @@ typedef struct
     size_t capacity;
 } Vector;
 
+Vector *getVectorBlock(void);
 Vector *vectorInit(size_t);
 Vector *vectorResize(Vector *, size_t);
+void *vectorGet(Vector *);
 void vectorPushBack(Vector *, void *);
 void vectorPopBack(Vector *);
-void *vectorGet(Vector *);
 void vectorFree(Vector *);
 
-Vector *getVectorBlock()
+Vector *getVectorBlock(void)
 {
     Vector *vec = (Vector *)malloc(sizeof(Vector));
     return vec;
@@ -44,19 +45,20 @@ Vector *vectorInit(size_t elementSize)
     return vec;
 }
 
-void vectorPushBack(Vector *vec, void *data)
+void vectorPushBack(Vector *vec, void *inputData)
 {
     if (!vec)
         return;
 
-    if (vec->size >= vec->capacity) {
+    if (vec->size >= vec->capacity)
+    {
         size_t newCapacity = vec->capacity * INCREAMENT;
         if (!vectorResize(vec, newCapacity))
             return;
     }
 
-    memcpy((char *)vec->data + (vec->size * vec->elementSize), 
-           data, 
+    memcpy(vec->data + (vec->size * vec->elementSize),
+           inputData,
            vec->elementSize);
     vec->size++;
 }
@@ -79,7 +81,8 @@ Vector *vectorResize(Vector *vec, size_t newCapacity)
     if (!newMemory)
         return NULL;
 
-    if (vec->data) {
+    if (vec->data)
+    {
         memcpy(newMemory, vec->data, vec->size * vec->elementSize);
         free(vec->data);
     }
