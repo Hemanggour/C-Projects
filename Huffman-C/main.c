@@ -14,7 +14,7 @@ void driver()
     int choice;
     do
     {
-        printf("0) EXIT\n1) Encode\n2) Decode\nSelect: ");
+        printf("\n0) EXIT\n1) Encode\n2) Decode\nSelect: ");
         fflush(stdin);
         scanf("%d", &choice);
 
@@ -25,13 +25,15 @@ void driver()
         case 1:
             if (inputBuffer)
                 MFree(inputBuffer);
+            printf("Enter String For Encode: ");
             inputBuffer = input();
             checkAndResizeInputBuffer(inputBuffer);
             startEncode(inputBuffer);
             break;
-        case 2:
+            case 2:
             if (inputBuffer)
-                MFree(inputBuffer);
+            MFree(inputBuffer);
+            printf("Enter String For Decode: ");
             inputBuffer = input();
             checkAndResizeInputBuffer(inputBuffer);
             startDecode(inputBuffer);
