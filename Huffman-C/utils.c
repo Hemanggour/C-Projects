@@ -35,7 +35,6 @@ HuffmanTree *getMinimumFreqNode(HuffmanTree *encodeListHead)
         if (tempNode->freq < minNode->freq)
             minNode = tempNode;
     }
-    // printf("Min Node addr: %p, Data: %c, freq: %d\n", minNode, minNode->data, minNode->freq);
     return minNode;
 }
 
@@ -62,7 +61,6 @@ HuffmanTree *getSumParentNode(HuffmanTree *left, HuffmanTree *right)
     parentNode->freq = (left->freq) + (right->freq);
     parentNode->left = left;
     parentNode->right = right;
-    // printf("Parent: Addr: %p, Left: %p, Right: %p\n", parentNode, parentNode->left, parentNode->right);
     return parentNode;
 }
 
@@ -168,16 +166,6 @@ EncodedStringList *getEncodeStringNode()
     return stringNode;
 }
 
-int getInputBufferSize(char *inputBuffer)
-{
-    if (!inputBuffer)
-        return 0;
-    size_t size = 0;
-    for (size_t i = 0; inputBuffer[i]; i++, size++)
-        ;
-    return size;
-}
-
 void insertInEncodeStringNode(EncodedStringList *stringNodeHead, char value)
 {
     if (!stringNodeHead)
@@ -195,6 +183,16 @@ void insertInEncodeStringNode(EncodedStringList *stringNodeHead, char value)
         tempNode = tempNode->next;
     }
     tempNode->encodeString[(tempNode->encodeStringSize)++] = value;
+}
+
+int getInputBufferSize(char *inputBuffer)
+{
+    if (!inputBuffer)
+        return 0;
+    size_t size = 0;
+    for (size_t i = 0; inputBuffer[i]; i++, size++)
+        ;
+    return size;
 }
 
 char *input()

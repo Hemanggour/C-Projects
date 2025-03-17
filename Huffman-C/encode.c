@@ -1,19 +1,20 @@
-void encode(HuffmanTree *encodeHuffmanTreeHead)
+void encode(HuffmanTree *encodeHuffmanTreeHead, char *inputBuffer)
 {
     EncodedStringList *stringNodeHead = getEncodeStringNode();
-
-    
+    for(size_t i = 0; inputBuffer[i]; i++) {
+        char currentChar = inputBuffer[i];
+        // Find and encode each character using the Huffman tree
+        // Add encoded bits to stringNodeHead
+    }
 }
 
 void startEncode(char *inputBuffer)
 {
     HuffmanTree *encodeListHead = createListForEncode(inputBuffer);
     traverseEncodeList(encodeListHead);
-    MFree(inputBuffer);
     HuffmanTree *encodeHuffmanTreeHead = createHuffmanTree(encodeListHead);
     encodeListHead = NULL;
-    // MFree(encodeListHead);
     huffmanPreOrder(encodeHuffmanTreeHead);
-    // huffmanInOrder(encodeHuffmanTreeHead);
-    // encode(encodeHuffmanTreeHead);
+    // encode(encodeHuffmanTreeHead, inputBuffer);
+    MFree(inputBuffer);
 }

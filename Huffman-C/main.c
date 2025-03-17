@@ -2,11 +2,11 @@
 
 #include "../Memory-Manager/memoryManager.c"
 
-#include "global.h"
+#include "./global.h"
 
-#include "utils.c"
-#include "encode.c"
-#include "decode.c"
+#include "./utils.c"
+#include "./encode.c"
+#include "./decode.c"
 
 void driver()
 {
