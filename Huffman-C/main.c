@@ -4,9 +4,9 @@
 
 #include "./global.h"
 
-#include "./utils.c"
-#include "./encode.c"
-#include "./decode.c"
+#include "./utils.h"
+#include "./encode.h"
+#include "./decode.h"
 
 void driver()
 {

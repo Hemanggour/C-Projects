@@ -3,8 +3,8 @@
 
 typedef enum bool
 {
-    False,
-    True
+    false,
+    true
 } bool;
 
 typedef struct HuffmanTree

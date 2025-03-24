@@ -1,22 +1,3 @@
-void traverseEncodeList(HuffmanTree *encodeListHead)
-{
-    int i = 1;
-    for (HuffmanTree *tempNode = encodeListHead; tempNode; tempNode = tempNode->right, i++)
-        printf("%d. addr: %p, %c: %d\n", i, tempNode, tempNode->data, tempNode->freq);
-}
-
-void huffmanInOrder(HuffmanTree *root)
-{
-
-    if (root)
-    {
-        huffmanInOrder(root->left);
-        printf("%c: %d,", root->data, root->freq);
-        huffmanInOrder(root->right);
-    }
-    return;
-}
-
 void huffmanPreOrder(HuffmanTree *encodeHuffmanTreeNode)
 {
     if (!encodeHuffmanTreeNode)
@@ -25,6 +6,43 @@ void huffmanPreOrder(HuffmanTree *encodeHuffmanTreeNode)
     huffmanPreOrder(encodeHuffmanTreeNode->left);
     huffmanPreOrder(encodeHuffmanTreeNode->right);
     return;
+}
+
+void huffmanInOrder(HuffmanTree *encodeHuffmanTreeNode)
+{
+    if (!encodeHuffmanTreeNode)
+        return;
+    huffmanPreOrder(encodeHuffmanTreeNode->left);
+    printf("Data: %c, freq: %d\n", encodeHuffmanTreeNode->data, encodeHuffmanTreeNode->freq);
+    huffmanPreOrder(encodeHuffmanTreeNode->right);
+    return;
+}
+
+void huffmanPostOrder(HuffmanTree *encodeHuffmanTreeNode)
+{
+    if (!encodeHuffmanTreeNode)
+        return;
+    huffmanPreOrder(encodeHuffmanTreeNode->left);
+    huffmanPreOrder(encodeHuffmanTreeNode->right);
+    printf("Data: %c, freq: %d\n", encodeHuffmanTreeNode->data, encodeHuffmanTreeNode->freq);
+    return;
+}
+
+void traverseEncodeList(HuffmanTree *encodeListHead)
+{
+    int i = 1;
+    for (HuffmanTree *tempNode = encodeListHead; tempNode; tempNode = tempNode->right, i++)
+        printf("%d. Data: %c, Freq: %d\n", i, tempNode->data, tempNode->freq);
+}
+
+HuffmanTree *getHuffmanTreeNode(void)
+{
+    HuffmanTree *node = (HuffmanTree *)MMalloc(sizeof(HuffmanTree));
+    if (!node)
+        return NULL;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
 }
 
 HuffmanTree *getMinimumFreqNode(HuffmanTree *encodeListHead)
@@ -36,16 +54,6 @@ HuffmanTree *getMinimumFreqNode(HuffmanTree *encodeListHead)
             minNode = tempNode;
     }
     return minNode;
-}
-
-HuffmanTree *getHuffmanTreeNode()
-{
-    HuffmanTree *node = (HuffmanTree *)MMalloc(sizeof(HuffmanTree));
-    if (!node)
-        return NULL;
-    node->left = NULL;
-    node->right = NULL;
-    return node;
 }
 
 HuffmanTree *getSumParentNode(HuffmanTree *left, HuffmanTree *right)
@@ -153,7 +161,19 @@ HuffmanTree *createHuffmanTree(HuffmanTree *encodeListHead)
     return encodeHuffmanTreeHead;
 }
 
-EncodedStringList *getEncodeStringNode()
+void traverseEncodeString(EncodedStringList *stringNodeHead)
+{
+    size_t totalSize = 0;
+    for (EncodedStringList *tempNode = stringNodeHead; tempNode; tempNode = tempNode->next)
+    {
+        for (size_t i = 0; i < tempNode->encodeStringSize; i++)
+            printf("%c", tempNode->encodeString[i]);
+        totalSize += tempNode->encodeStringSize;
+    }
+    printf("\nTotal size: %zu bits\n", totalSize);
+}
+
+EncodedStringList *getEncodeStringNode(void)
 {
     EncodedStringList *stringNode = (EncodedStringList *)MMalloc(sizeof(EncodedStringList));
     if (!stringNode)
@@ -170,7 +190,7 @@ void insertInEncodeStringNode(EncodedStringList *stringNodeHead, char value)
 {
     if (!stringNodeHead)
     {
-        printf("String List Head Not Exists!!");
+        printf("String List Head Not Exists!!\n");
         MFreeAll();
         exit(EXIT_FAILURE);
     }
@@ -182,7 +202,51 @@ void insertInEncodeStringNode(EncodedStringList *stringNodeHead, char value)
         tempNode->next = getEncodeStringNode();
         tempNode = tempNode->next;
     }
-    tempNode->encodeString[(tempNode->encodeStringSize)++] = value;
+    tempNode->encodeString[tempNode->encodeStringSize] = value;
+    tempNode->encodeStringSize++;
+}
+
+void findCharacterPath(HuffmanTree *root, char character, char *path, int *pathLen, bool *found)
+{
+    if (!root || *found)
+        return;
+    if (root->data == character)
+    {
+        *found = true;
+        path[*pathLen] = '\0';
+        return;
+    }
+    if (root->left)
+    {
+        path[*pathLen] = '0';
+        (*pathLen)++;
+        findCharacterPath(root->left, character, path, pathLen, found);
+        if (!*found)
+            (*pathLen)--;
+    }
+    if (root->right && !*found)
+    {
+        path[*pathLen] = '1';
+        (*pathLen)++;
+        findCharacterPath(root->right, character, path, pathLen, found);
+        if (!*found)
+            (*pathLen)--;
+    }
+}
+
+void addCharacterEncoding(HuffmanTree *root, char character, EncodedStringList *stringNodeHead)
+{
+    char path[256] = {0};
+    int pathLen = 0;
+    bool found = false;
+    findCharacterPath(root, character, path, &pathLen, &found);
+    if (found)
+    {
+        for (int i = 0; i < pathLen; i++)
+            insertInEncodeStringNode(stringNodeHead, path[i]);
+    }
+    else
+        printf("Error: Character '%c' not found in Huffman tree\n", character);
 }
 
 int getInputBufferSize(char *inputBuffer)
@@ -195,7 +259,7 @@ int getInputBufferSize(char *inputBuffer)
     return size;
 }
 
-char *input()
+char *input(void)
 {
     char *inputBuffer = (char *)MMalloc(BUFFER_SIZE);
     fflush(stdin);
