@@ -30,9 +30,9 @@ void driver()
             checkAndResizeInputBuffer(inputBuffer);
             startEncode(inputBuffer);
             break;
-            case 2:
+        case 2:
             if (inputBuffer)
-            MFree(inputBuffer);
+                MFree(inputBuffer);
             printf("Enter String For Decode: ");
             inputBuffer = input();
             checkAndResizeInputBuffer(inputBuffer);
@@ -51,9 +51,7 @@ int main()
     driver();
     LeakInfo *leaks = MGetLeaks();
     for (size_t i = 0; i < leaks->leakCount; i++)
-    {
         printf("%d. addr: %p, size: %zu\n", i + 1, leaks[i].address, leaks[i].size);
-    }
 
     return EXIT_SUCCESS;
 }
