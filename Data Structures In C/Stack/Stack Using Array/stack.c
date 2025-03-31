@@ -1,9 +1,9 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void push(int *stack, int size, int *top)
 {
-    if((*top) >= size-1)
+    if ((*top) >= size - 1)
     {
         printf("Over Flow!!\n");
         return;
@@ -15,7 +15,7 @@ void push(int *stack, int size, int *top)
 
 void pop(int *stack, int size, int *top)
 {
-    if((*top) < 0)
+    if ((*top) < 0)
     {
         printf("Under Flow!!\n");
         return;
@@ -24,19 +24,19 @@ void pop(int *stack, int size, int *top)
     printf("Poped element :- %d\n", stack[(*top)--]);
 }
 
-void peek(int* stack, int top)
+void peek(int *stack, int top)
 {
     printf("Top Element: %d\n", stack[top]);
 }
 
 void display(int *stack, int size, int top)
 {
-    if(top < 0)
+    if (top < 0)
     {
         printf("Under Flow!!\n");
         return;
     }
-    for(int i=top; i>=0; i--)
+    for (int i = top; i >= 0; i--)
     {
         printf("%d\n", stack[i]);
     }
@@ -49,7 +49,7 @@ int main()
     printf("Enter size :- ");
     scanf("%d", &size);
 
-    int *stack = (int*)malloc(sizeof(int)*size);
+    int *stack = (int *)malloc(sizeof(int) * size);
 
     printf("0) Exit\n1. Push\n2. Pop\n3. Display\n4) Peek\n");
 
@@ -58,7 +58,7 @@ int main()
         printf("Select :- ");
         scanf("%d", &choice);
 
-        switch(choice)
+        switch (choice)
         {
         case 0:
             break;
@@ -82,13 +82,13 @@ int main()
             peek(stack, top);
             break;
         }
-        default :
+        default:
         {
             printf("\nInvalid Choice!!\n");
             break;
         }
         }
-    } while(choice);
+    } while (choice);
 
     return 0;
 }

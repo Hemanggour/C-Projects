@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<time.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 int randomGen(void)
 {
@@ -8,7 +8,7 @@ int randomGen(void)
     return rand() % 3;
 }
 
-void input(int* user)
+void input(int *user)
 {
     while (1)
     {
@@ -26,7 +26,8 @@ void input(int* user)
 void game(void)
 {
     int user, comp, userPoint = 0, compPoint = 0;
-    enum {
+    enum
+    {
         rock,
         paper,
         scissor

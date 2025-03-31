@@ -1,10 +1,10 @@
-#include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <string.h>
 
-char* str = NULL;
-char* str2 = NULL;
+char *str = NULL;
+char *str2 = NULL;
 int size, count = 7;
 int size_cpy;
 
@@ -131,13 +131,13 @@ void input_string()
     scanf("%[^\n]", str);
     size = strlen(str);
     size_cpy = size;
-    str = (char*)realloc(str, sizeof(char) * size);
-    str2 = (char*)malloc(sizeof(char) * size);
+    str = (char *)realloc(str, sizeof(char) * size);
+    str2 = (char *)malloc(sizeof(char) * size);
 }
 
 int main()
 {
-    str = (char*)malloc(sizeof(char) * 51);
+    str = (char *)malloc(sizeof(char) * 51);
     char choice;
 
     while (choice != '0')

@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 // Create structure for Player Information!!
 typedef struct player
@@ -10,7 +10,7 @@ typedef struct player
 } player;
 
 player ply1, ply2;
-int dice;   // Create Dice Variable!!
+int dice; // Create Dice Variable!!
 
 void saveGame(void);
 void displayRecord(void);
@@ -53,7 +53,7 @@ int main()
 //  Save Player Points And Names With Time And Date in File !!
 void saveGame()
 {
-    FILE* file = fopen("SnakeLadderRecord.txt", "a");
+    FILE *file = fopen("SnakeLadderRecord.txt", "a");
     if (!file)
     {
         printf("File Open Error!!\n");
@@ -68,7 +68,7 @@ void saveGame()
 //  Display Saved Games from File!!
 void displayRecord()
 {
-    FILE* file = fopen("SnakeLadderRecord.txt", "r");
+    FILE *file = fopen("SnakeLadderRecord.txt", "r");
     if (!file)
     {
         printf("File Open Error!!\n");
@@ -87,7 +87,7 @@ void game()
     resetGame();
     while (ply1.point != 100 && ply2.point != 100)
     {
-        //First Player Chance!!
+        // First Player Chance!!
         printf("%s Chance!!\n(Press Enter to Roll Dice!!)\n", ply1.name);
         getchar();
         rollDice();
@@ -107,7 +107,7 @@ void game()
         printf("Your Points:- %d\n\n", ply1.point);
         if (ply1.point == 100)
             break;
-        //Second Player Chance!!
+        // Second Player Chance!!
         printf("%s Chance!!\n(Press Enter to Roll Dice!!)\n", ply2.name);
         getchar();
         rollDice();
@@ -138,67 +138,67 @@ int checkSnakeLadder(int point)
     {
     case 2:
         printf("Ladder Up!!\n");
-        return 39;  //Ladder
+        return 39; // Ladder
     case 7:
         printf("Ladder Up!!\n");
-        return 29;  //Ladder
+        return 29; // Ladder
     case 22:
         printf("Ladder Up!!\n");
-        return 41;  //Ladder
+        return 41; // Ladder
     case 27:
         printf("Snake Bite!!\n");
-        return 7;   //Snake
+        return 7; // Snake
     case 28:
         printf("Ladder Up!!\n");
-        return 77;  //Ladder
+        return 77; // Ladder
     case 30:
         printf("Ladder Up!!\n");
-        return 32;  //Ladder
+        return 32; // Ladder
     case 35:
         printf("Snake Bite!!\n");
-        return 5;   //Snake
+        return 5; // Snake
     case 39:
         printf("Snake Bite!!\n");
-        return 3;   //Snake
+        return 3; // Snake
     case 44:
         printf("Ladder Up!!\n");
-        return 58;  //Ladder
+        return 58; // Ladder
     case 50:
         printf("Snake Bite!!\n");
-        return 34;  //Snake
+        return 34; // Snake
     case 54:
         printf("Ladder Up!!\n");
-        return 69;  //Ladder
+        return 69; // Ladder
     case 59:
         printf("Snake Bite!!\n");
-        return 46;  //Snake
+        return 46; // Snake
     case 66:
         printf("Snake Bite!!\n");
-        return 24;  //Snake
+        return 24; // Snake
     case 70:
         printf("Ladder Up!!\n");
-        return 90;  //Ladder
+        return 90; // Ladder
     case 73:
         printf("Snake Bite!!\n");
-        return 12;  //Snake
+        return 12; // Snake
     case 76:
         printf("Snake Bite!!\n");
-        return 63;  //Snake
+        return 63; // Snake
     case 80:
         printf("Ladder Up!!\n");
-        return 83;  //Ladder
+        return 83; // Ladder
     case 87:
         printf("Ladder Up!!\n");
-        return 93;  //Ladder
+        return 93; // Ladder
     case 89:
         printf("Snake Bite!!\n");
-        return 67;  //Snake
+        return 67; // Snake
     case 97:
         printf("Snake Bite!!\n");
-        return 86;  //Snake
+        return 86; // Snake
     case 99:
         printf("Snake Bite!!\n");
-        return 26;  //Snake
+        return 26; // Snake
     default:
         return point;
     }

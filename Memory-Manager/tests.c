@@ -1,18 +1,22 @@
 #include <stdio.h>
 #include "memoryManager.c"
 
-void testMCalloc() {
+void testMCalloc()
+{
     printf("Running MCalloc() Tests...\n");
 
     // Test 1: Allocate memory and check if initialized to zero
     int *arr = (int *)MCalloc(5, sizeof(int));
-    if (!arr) {
+    if (!arr)
+    {
         printf("Test 1 Failed: MCalloc() returned NULL\n");
         return;
     }
     int initialized = 1;
-    for (int i = 0; i < 5; i++) {
-        if (arr[i] != 0) {
+    for (int i = 0; i < 5; i++)
+    {
+        if (arr[i] != 0)
+        {
             initialized = 0;
             break;
         }
@@ -22,16 +26,22 @@ void testMCalloc() {
     // Test 2: MCalloc with zero size or typeSize should return NULL
     void *zeroAlloc1 = MCalloc(0, sizeof(int));
     void *zeroAlloc2 = MCalloc(5, 0);
-    if (!zeroAlloc1 && !zeroAlloc2) {
+    if (!zeroAlloc1 && !zeroAlloc2)
+    {
         printf("Test 2 Passed: MCalloc(0, X) and MCalloc(X, 0) returned NULL\n");
-    } else {
+    }
+    else
+    {
         printf("Test 2 Failed: Expected NULL but got allocated memory\n");
     }
 
     // Test 3: Free allocated memory
-    if (MFree(arr)) {
+    if (MFree(arr))
+    {
         printf("Test 3 Passed: MFree() successfully freed allocated memory\n");
-    } else {
+    }
+    else
+    {
         printf("Test 3 Failed: MFree() failed to free memory\n");
     }
 
@@ -149,7 +159,7 @@ int main()
 
     // Test 7: Freeing a Pointer Not Allocated
     printf("\nTest 7: Freeing a Pointer Not Allocated\n");
-    int *pInvalid = (int *)malloc(sizeof(int));                                   // Direct malloc, not tracked by MMalloc (Output should be '0' failed)
+    int *pInvalid = (int *)malloc(sizeof(int));                                           // Direct malloc, not tracked by MMalloc (Output should be '0' failed)
     printf("MFree() Status code (('0' failed) or ('1' success)): %d\n", MFree(pInvalid)); // Should print status code ('0' for failed) or ('1' for success)
 
     testMRealloc();

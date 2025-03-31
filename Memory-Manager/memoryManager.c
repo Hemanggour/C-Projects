@@ -157,7 +157,7 @@ LeakInfo *MGetLeaks(void)
         return NULL;
     LeakInfo *leaks = (LeakInfo *)malloc(actualSize * sizeof(LeakInfo));
     if (!leaks)
-    return NULL;
+        return NULL;
     leaks->leakCount = actualSize;
     for (MemoryBlock *i = MemoryBlockHead; i; i = i->next, index++)
     {

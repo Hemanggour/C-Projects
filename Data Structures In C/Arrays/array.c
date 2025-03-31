@@ -1,48 +1,46 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 int *inisialise(int size)
 {
     int *arr = NULL;
-    arr = (int*)malloc(size * sizeof(int));
+    arr = (int *)malloc(size * sizeof(int));
     return arr;
 }
 
-
 void insert(int arr[], int size)
 {
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-        for(int i=0; i<size; i++)
+        for (int i = 0; i < size; i++)
         {
-            printf("Enter element at %d : ",i);
-            scanf("%d",&arr[i]);
+            printf("Enter element at %d : ", i);
+            scanf("%d", &arr[i]);
         }
     }
 }
-
 
 int insert_at_pos(int arr[], int size)
 {
     int pos, el;
 
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-position:
+    position:
         printf("Enter position for element : ");
-        scanf("%d",&pos);
+        scanf("%d", &pos);
 
-        if(pos > size || pos <=0)
+        if (pos > size || pos <= 0)
         {
             printf("Invalid position!!\n");
             goto position;
@@ -51,29 +49,28 @@ position:
         else
         {
             printf("Enter element to be inserted : ");
-            scanf("%d",&el);
+            scanf("%d", &el);
 
             size++;
 
-            arr = (int*)realloc(arr, size * sizeof(int));
+            arr = (int *)realloc(arr, size * sizeof(int));
 
-            for(int i=size-2; i>=pos-1; i--)
+            for (int i = size - 2; i >= pos - 1; i--)
             {
-                arr[i+1] = arr[i];
+                arr[i + 1] = arr[i];
             }
 
-            arr[pos-1] = el;
+            arr[pos - 1] = el;
         }
     }
     return size;
 }
 
-
 int insert_at_first(int arr[], int size)
 {
     int el;
 
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
@@ -82,15 +79,15 @@ int insert_at_first(int arr[], int size)
     {
 
         printf("Enter element to be inserted at first : ");
-        scanf("%d",&el);
+        scanf("%d", &el);
 
         size++;
 
-        arr = (int*)realloc(arr, size * sizeof(int));
+        arr = (int *)realloc(arr, size * sizeof(int));
 
-        for(int i=size-2; i>=0; i--)
+        for (int i = size - 2; i >= 0; i--)
         {
-            arr[i+1] = arr[i];
+            arr[i + 1] = arr[i];
         }
 
         arr[0] = el;
@@ -98,12 +95,11 @@ int insert_at_first(int arr[], int size)
     return size;
 }
 
-
 int insert_at_last(int arr[], int size)
 {
     int el;
 
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
@@ -111,61 +107,58 @@ int insert_at_last(int arr[], int size)
     else
     {
         printf("Enter element to be inserted at last : ");
-        scanf("%d",&el);
+        scanf("%d", &el);
 
         size++;
 
-        arr = (int*)realloc(arr, size * sizeof(int));
+        arr = (int *)realloc(arr, size * sizeof(int));
 
-        arr[size-1] = el;
+        arr[size - 1] = el;
     }
     return size;
 }
 
-
-void traverse(int arr[],int size)
+void traverse(int arr[], int size)
 {
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-        for(int i=0; i<size; i++)
+        for (int i = 0; i < size; i++)
         {
-            printf("Element at %d : %d\n",i,arr[i]);
+            printf("Element at %d : %d\n", i, arr[i]);
         }
     }
 }
-
 
 void sort(int arr[], int size)
 {
     int temp;
 
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-        for(int i=0; i<size; i++)
+        for (int i = 0; i < size; i++)
         {
-            for(int j=0; j<size-1; j++)
+            for (int j = 0; j < size - 1; j++)
             {
-                if(arr[j] > arr[j+1])
+                if (arr[j] > arr[j + 1])
                 {
                     temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
         }
     }
 }
-
 
 int deleteall(int arr[], int size)
 {
@@ -176,23 +169,22 @@ int deleteall(int arr[], int size)
     return size;
 }
 
-
 int delete_at_pos(int arr[], int size)
 {
     int pos;
 
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-position:
+    position:
         printf("Enter position for delete : ");
-        scanf("%d",&pos);
+        scanf("%d", &pos);
 
-        if(pos > size || pos <=0)
+        if (pos > size || pos <= 0)
         {
             printf("Invalid position!!\n");
             goto position;
@@ -201,46 +193,44 @@ position:
         else
         {
             pos--;
-            while(pos <= size-1)
+            while (pos <= size - 1)
             {
-                arr[pos] = arr[pos+1];
+                arr[pos] = arr[pos + 1];
                 pos++;
             }
 
             size--;
 
-            arr = (int*)realloc(arr, size * sizeof(int));
+            arr = (int *)realloc(arr, size * sizeof(int));
         }
     }
     return size;
 }
-
 
 int delete_at_first(int arr[], int size)
 {
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
 
     else
     {
-        for(int i=0; i<=size-1; i++)
+        for (int i = 0; i <= size - 1; i++)
         {
-            arr[i] = arr[i+1];
+            arr[i] = arr[i + 1];
         }
 
         size--;
 
-        arr = (int*)realloc(arr, size * sizeof(int));
+        arr = (int *)realloc(arr, size * sizeof(int));
     }
     return size;
 }
 
-
 int delete_at_last(int arr[], int size)
 {
-    if(size == 0)
+    if (size == 0)
     {
         printf("Please define array size first!!\nPress (11)\n");
     }
@@ -249,11 +239,10 @@ int delete_at_last(int arr[], int size)
     {
         size--;
 
-        arr = (int*)realloc(arr, size * sizeof(int));
+        arr = (int *)realloc(arr, size * sizeof(int));
     }
     return size;
 }
-
 
 int main()
 {
@@ -263,22 +252,22 @@ int main()
 arr_intialize:
 
     printf("Enter size of array: ");
-    scanf("%d",&size);
+    scanf("%d", &size);
 
-//    arr = (int*)malloc(size*sizeof(int));
+    //    arr = (int*)malloc(size*sizeof(int));
 
     arr = inisialise(size);
 
     insert(arr, size);
 
     printf("\nSelect Operation:-\n0) EXIT!!\n1) Re-Insert elements\n2) Insert at position\n3) Insert at first\n4) Insert at last\n5) Delete at first\n6) Delete at last\n7) Delete at position\n8) Delete array\n9) Sort array\n10) Traverse array\n11) Re-enter array size\n");
-    while(1)
+    while (1)
     {
         printf("Select:- ");
         fflush(stdin);
-        scanf("%d",&op);
+        scanf("%d", &op);
 
-        switch(op)
+        switch (op)
         {
         case 0:
         {
@@ -293,7 +282,7 @@ arr_intialize:
 
         case 2:
         {
-            size =  insert_at_pos(arr, size);
+            size = insert_at_pos(arr, size);
             break;
         }
 
@@ -329,7 +318,7 @@ arr_intialize:
 
         case 8:
         {
-            size = deleteall(arr,size);
+            size = deleteall(arr, size);
             goto arr_intialize;
             break;
         }

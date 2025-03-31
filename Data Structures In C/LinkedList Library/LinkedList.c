@@ -1,6 +1,6 @@
-#include<stdlib.h>
+#include <stdlib.h>
 
-char* help()
+char *help()
 {
     return "head = createLL(size);\nnode = createNode(data);\nnode = insertLL(node, data);\nhead = insertAtFirst(head, data);\nhead = insertAtLast(head, data);\nhead = insertAtPosition(head, position, data);\nhead = deleteAtFirst(head);\nhead = deleteAtLast(head);\nhead = deleteAtPosition(head, position);\nhead = deleteLL(head);\nhead = reverseLL(head);\n\n--\"nodeCount\" Is a Variable Which Store's How Much Nodes is in the List. (Updates Automatically)!!\n\n--You Can Use \"tail\" Pointer To Get The Last Node Of The List\n\n--\"nextNode = insertLL(node, data);\"\n--\"insertLL()\" returns the \"nextnode\" of the given \"node\" You Can use this code:\n\nint data;\nlist* node = head;\nfor (list* temp = head; temp; temp=temp->next) {\n\tprintf(\"Enter Data: \");\n\tscanf(\"\%d\", &data);\n\tnode = insertLL(node, data);\n}\n\n--To Display List Use This Code:\nfor (list* temp = head; temp; temp = temp->next)\n\tprintf(\"\%d \", temp->data);\n\n";
 }
@@ -10,25 +10,25 @@ int nodeCount = 0;
 typedef struct Linked_list
 {
     int data;
-    struct Linked_list* next;
+    struct Linked_list *next;
 } list;
-list* head = NULL;
-list* tail = NULL;
+list *head = NULL;
+list *tail = NULL;
 
-list* createNode(int data)
+list *createNode(int data)
 {
-    list* newnode = (list*)malloc(sizeof(list));
+    list *newnode = (list *)malloc(sizeof(list));
     newnode->data = data;
     newnode->next = NULL;
     nodeCount++;
     return newnode;
 }
 
-list* createLL(int size)
+list *createLL(int size)
 {
     for (int i = 1; i <= size; i++)
     {
-        list* newnode = createNode(0);
+        list *newnode = createNode(0);
 
         if (!head)
             head = tail = newnode;
@@ -38,26 +38,26 @@ list* createLL(int size)
     return head;
 }
 
-list* insertAtFirst(list* head, int data)
+list *insertAtFirst(list *head, int data)
 {
     if (!head)
         return head;
-    list* newnode = createNode(data);
+    list *newnode = createNode(data);
     newnode->next = head;
     head = newnode;
     return head;
 }
 
-list* insertAtLast(list* head, int data)
+list *insertAtLast(list *head, int data)
 {
     if (!head)
         return head;
-    list* newnode = createNode(data);
+    list *newnode = createNode(data);
     tail = tail->next = newnode;
     return head;
 }
 
-list* insertAtPosition(list* head, int pos, int data)
+list *insertAtPosition(list *head, int pos, int data)
 {
     if (!head)
         return head;
@@ -71,8 +71,8 @@ list* insertAtPosition(list* head, int pos, int data)
             head = insertAtLast(head, data);
         return head;
     }
-    list* newnode = createNode(data);
-    list* temp = head;
+    list *newnode = createNode(data);
+    list *temp = head;
     for (int i = 1; i < pos - 1; i++)
         temp = temp->next;
     newnode->next = temp->next;
@@ -80,22 +80,22 @@ list* insertAtPosition(list* head, int pos, int data)
     return head;
 }
 
-list* deleteAtFirst(list* head)
+list *deleteAtFirst(list *head)
 {
     if (!head)
         return head;
-    list* temp = head;
+    list *temp = head;
     head = head->next;
     free(temp);
     nodeCount--;
     return head;
 }
 
-list* deleteAtLast(list* head)
+list *deleteAtLast(list *head)
 {
     if (!head)
         return head;
-    list* temp = head;
+    list *temp = head;
     while (temp->next != tail)
         temp = temp->next;
     free(tail);
@@ -105,7 +105,7 @@ list* deleteAtLast(list* head)
     return head;
 }
 
-list* deleteAtPosition(list* head, int pos)
+list *deleteAtPosition(list *head, int pos)
 {
     if (!head)
         return head;
@@ -119,8 +119,8 @@ list* deleteAtPosition(list* head, int pos)
             head = deleteAtLast(head);
         return head;
     }
-    list* temp = head;
-    list* prev;
+    list *temp = head;
+    list *prev;
     for (int i = 1; i < pos - 1; i++)
         temp = temp->next;
     prev = temp;
@@ -131,13 +131,13 @@ list* deleteAtPosition(list* head, int pos)
     return head;
 }
 
-list* deleteLL(list* head)
+list *deleteLL(list *head)
 {
     if (!head)
         return head;
     while (head)
     {
-        list* temp = head;
+        list *temp = head;
         head = head->next;
         free(temp);
     }
@@ -145,9 +145,9 @@ list* deleteLL(list* head)
     return head;
 }
 
-list* reverseLL(list* head)
+list *reverseLL(list *head)
 {
-    list* temp, * prev, * nextnode;
+    list *temp, *prev, *nextnode;
     prev = NULL;
 
     for (temp = nextnode = head; nextnode != NULL;)
@@ -161,7 +161,7 @@ list* reverseLL(list* head)
     return head;
 }
 
-list* insertLL(list* node, int data)
+list *insertLL(list *node, int data)
 {
     if (!node)
         return node;

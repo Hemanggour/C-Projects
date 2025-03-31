@@ -1,7 +1,7 @@
-//Stack implementation using singly linked list.
+// Stack implementation using singly linked list.
 
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 struct node
 {
@@ -12,12 +12,12 @@ struct node *top = NULL;
 
 void push()
 {
-    newnode = (struct node*)malloc(sizeof(struct node));
+    newnode = (struct node *)malloc(sizeof(struct node));
     newnode->next = NULL;
     printf("Enter data :- ");
     scanf("%d", &newnode->data);
 
-    if(top == NULL)
+    if (top == NULL)
     {
         top = newnode;
     }
@@ -31,7 +31,7 @@ void push()
 
 void pop()
 {
-    if(top == NULL)
+    if (top == NULL)
     {
         printf("UNDER FLOW!!\n");
         return;
@@ -45,7 +45,7 @@ void pop()
 
 void peek()
 {
-    if(top == NULL)
+    if (top == NULL)
     {
         printf("UNDER FLOW!!\n");
         return;
@@ -56,15 +56,15 @@ void peek()
 
 void count_size()
 {
-    if(top == NULL)
+    if (top == NULL)
     {
         printf("UNDER FLOW!!\n");
         return;
     }
 
-    int count =0;
+    int count = 0;
 
-    for(temp = top; temp!=NULL; temp = temp->next)
+    for (temp = top; temp != NULL; temp = temp->next)
     {
         count++;
     }
@@ -73,13 +73,13 @@ void count_size()
 
 void display()
 {
-    if(top == NULL)
+    if (top == NULL)
     {
         printf("UNDER FLOW!!\n");
         return;
     }
 
-    for(temp = top; temp!=NULL; temp = temp->next)
+    for (temp = top; temp != NULL; temp = temp->next)
     {
         printf("%d\n", temp->data);
     }
@@ -91,12 +91,12 @@ int main()
 
     printf("Enter choice :-\n0. EXIT\n1. PUSH\n2. POP\n3. PEEK\n4. Display\n5. Count\n");
 
-    while(ch != 0)
+    while (ch != 0)
     {
         printf("Select :- ");
         scanf("%d", &ch);
 
-        switch(ch)
+        switch (ch)
         {
         case 0:
         {

@@ -1,12 +1,12 @@
-#include<stdio.h>
-#include<time.h>
+#include <stdio.h>
+#include <time.h>
 #define SIZE 1000
 
 char data[SIZE];
 
 void saveData(void)
 {
-    FILE* file = fopen("ToDoList.txt", "a");
+    FILE *file = fopen("ToDoList.txt", "a");
     time_t t = time(NULL);
     printf("Enter Task: ");
     fflush(stdin);
@@ -25,7 +25,7 @@ void removeTask(void)
 
 void getData(void)
 {
-    FILE* file = fopen("ToDoList.txt", "r");
+    FILE *file = fopen("ToDoList.txt", "r");
     if (!file)
     {
         printf("First Create Your Task!!\n");

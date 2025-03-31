@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 char p1[20], p2[20];
-int* bullet = NULL;
-int* ply_1_ability = NULL;
-int* ply_2_ability = NULL;
+int *bullet = NULL;
+int *ply_1_ability = NULL;
+int *ply_2_ability = NULL;
 int empty = 0;
 int ch = 1;
 int ply_1_win = 0, ply_2_win = 0;
@@ -29,7 +29,7 @@ void display_name()
 
 void saveGame()
 {
-    FILE* file = fopen("BuckShotRecord.txt", "a");
+    FILE *file = fopen("BuckShotRecord.txt", "a");
     if (!file)
         return;
     time_t t;
@@ -41,7 +41,7 @@ void saveGame()
 
 void displayGameRecord()
 {
-    FILE* file = fopen("BuckShotRecord.txt", "r");
+    FILE *file = fopen("BuckShotRecord.txt", "r");
     if (!file)
     {
         printf("File Open Error!!\n");
@@ -63,8 +63,8 @@ int random_gen(int num)
 void gen_ability(int num)
 {
     printf("\nGenerating abilities for %s!!\n\n", p1);
-    ply_1_ability = (int*)realloc(ply_1_ability, sizeof(int) * num);
-    ply_2_ability = (int*)realloc(ply_2_ability, sizeof(int) * num);
+    ply_1_ability = (int *)realloc(ply_1_ability, sizeof(int) * num);
+    ply_2_ability = (int *)realloc(ply_2_ability, sizeof(int) * num);
     empty = 0;
     for (int i = 0; i < num; i++)
     {
@@ -101,7 +101,7 @@ void gen_ability(int num)
 void load_bullet(int num)
 {
     printf("\nLoading Bullets!!\n");
-    bullet = (int*)realloc(bullet, sizeof(int) * num);
+    bullet = (int *)realloc(bullet, sizeof(int) * num);
     empty = 0;
     for (int i = 0; i < num; i++)
     {
@@ -1184,9 +1184,9 @@ void select_round()
 int main()
 {
     display_name();
-    bullet = (int*)malloc(sizeof(int));
-    ply_1_ability = (int*)malloc(sizeof(int));
-    ply_2_ability = (int*)malloc(sizeof(int));
+    bullet = (int *)malloc(sizeof(int));
+    ply_1_ability = (int *)malloc(sizeof(int));
+    ply_2_ability = (int *)malloc(sizeof(int));
 
     while (ch != 0)
     {
