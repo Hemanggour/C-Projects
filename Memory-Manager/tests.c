@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "memoryManager.c"
+#include "memoryManager.h"
 
 void testMCalloc()
 {
@@ -114,7 +114,7 @@ int main()
     *p2 = 84;
     printf("Allocated value: %d\n", *p2);
     printf("MFree() Status code (('0' failed) or ('1' success)): %d\n", MFree(p2));
-    printf("MFree() Status code (('0' failed) or ('1' success)): %d\n", MFree(p2)); // Freeing twice should be handled (Output Should be '0' failed)
+    printf("MFree() Status code (('0' failed) or ('1' success))\nFreeing twice should be handled (Output Should be '0' failed): %d\n", MFree(p2)); // Freeing twice should be handled (Output Should be '0' failed)
 
     // Test 3: Memory Leak Check
     printf("\nTest 3: Memory Leak Check\n");

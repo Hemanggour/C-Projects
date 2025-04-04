@@ -13,12 +13,25 @@ This project implements a simple memory management system in C, providing custom
 ## File Structure
 ```
 Memory-Manager/
-│── memoryManager.c     # Contains memory management functions
-│── tests.c             # Contains test cases for memory management
-│── README.md           # Documentation
+│── global.h           # Contains global structures and variables
+│── memoryManager.h    # Header file with function declarations
+│── memoryManager.c    # Contains memory management functions
+│── tests.c           # Contains test cases for memory management
+│── README.md         # Documentation
 ```
 
 ## Implementation Details
+### global.h
+This file contains global structures and variables:
+- `MemoryBlock` struct: Stores metadata about allocated memory blocks
+- `LeakInfo` struct: Stores information about memory leaks
+- Global pointers for managing the memory block list
+
+### memoryManager.h
+Header file containing function declarations and necessary includes:
+- Function prototypes for all memory management functions
+- Required standard library includes
+
 ### memoryManager.c
 This file contains the implementation of memory management functions:
 - `MemoryBlock` struct: Stores metadata about allocated memory.
@@ -34,9 +47,9 @@ This file contains the implementation of memory management functions:
 This file contains test cases to validate the functionality of the memory manager.
 
 ## Usage
-To use the memory manager, include `memoryManager.c` in your program:
+To use the memory manager in your program:
 ```c
-#include "memoryManager.c"
+#include "memoryManager.h"
 ```
 Compile and run:
 ```sh
@@ -46,7 +59,7 @@ gcc tests.c -o tests
 
 ## Example Usage
 ```c
-#include "memoryManager.c"
+#include "memoryManager.h"
 
 int main() {
     int *arr = (int *)MMalloc(5 * sizeof(int));

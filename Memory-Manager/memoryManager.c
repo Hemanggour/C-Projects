@@ -1,29 +1,3 @@
-#include <stdlib.h>
-
-typedef struct MemoryBlock
-{
-    size_t size;
-    void *memory;
-    struct MemoryBlock *next;
-} MemoryBlock;
-
-typedef struct LeakInfo
-{
-    size_t size;
-    size_t leakCount;
-    void *address;
-} LeakInfo;
-
-MemoryBlock *getMemoryBlock(void);
-LeakInfo *MGetLeaks(void);
-int MFreeAll(void);
-int MFree(void *);
-void *MMalloc(size_t);
-void *MCalloc(size_t, size_t);
-void *MRealloc(void *, size_t);
-
-MemoryBlock *MemoryBlockHead = NULL, *MemoryBlockTail = NULL;
-
 MemoryBlock *getMemoryBlock(void)
 {
     MemoryBlock *block = (MemoryBlock *)malloc(sizeof(MemoryBlock));
@@ -33,30 +7,43 @@ MemoryBlock *getMemoryBlock(void)
     return block;
 }
 
-void *MRealloc(void *ptr, size_t size)
+int MFree(void *ptr)
 {
-    if (!size)
-    {
-        MFree(ptr);
-        return NULL;
-    }
     if (!ptr)
-        return MMalloc(size);
-    MemoryBlock *block = MemoryBlockHead;
-    while (block)
+        return 0;
+    MemoryBlock *temp = MemoryBlockHead, *prev = NULL;
+    while (temp)
     {
-        if (block->memory == ptr)
-            break;
-        block = block->next;
+        if (temp->memory == ptr)
+        {
+            if (prev)
+                prev->next = temp->next;
+            else
+                MemoryBlockHead = temp->next;
+            if (temp == MemoryBlockTail)
+                MemoryBlockTail = prev;
+
+            free(temp->memory);
+            free(temp);
+            return 1;
+        }
+        prev = temp;
+        temp = temp->next;
     }
-    if (!block)
-        return NULL;
-    void *reallocMemory = realloc(ptr, size);
-    if (!reallocMemory)
-        return NULL;
-    block->size = size;
-    block->memory = reallocMemory;
-    return reallocMemory;
+    return 0;
+}
+
+int MFreeAll(void)
+{
+    MemoryBlock *temp = MemoryBlockHead;
+    while (MemoryBlockHead)
+    {
+        MemoryBlockHead = temp->next;
+        free(temp->memory);
+        free(temp);
+        temp = MemoryBlockHead;
+    }
+    return ((!MemoryBlockHead) ? 1 : 0);
 }
 
 void *MMalloc(size_t size)
@@ -109,43 +96,30 @@ void *MCalloc(size_t size, size_t typeSize)
     return callocMemory;
 }
 
-int MFree(void *ptr)
+void *MRealloc(void *ptr, size_t size)
 {
+    if (!size)
+    {
+        MFree(ptr);
+        return NULL;
+    }
     if (!ptr)
-        return 0;
-    MemoryBlock *temp = MemoryBlockHead, *prev = NULL;
-    while (temp)
+        return MMalloc(size);
+    MemoryBlock *block = MemoryBlockHead;
+    while (block)
     {
-        if (temp->memory == ptr)
-        {
-            if (prev)
-                prev->next = temp->next;
-            else
-                MemoryBlockHead = temp->next;
-            if (temp == MemoryBlockTail)
-                MemoryBlockTail = prev;
-
-            free(temp->memory);
-            free(temp);
-            return 1;
-        }
-        prev = temp;
-        temp = temp->next;
+        if (block->memory == ptr)
+            break;
+        block = block->next;
     }
-    return 0;
-}
-
-int MFreeAll(void)
-{
-    MemoryBlock *temp = MemoryBlockHead;
-    while (MemoryBlockHead)
-    {
-        MemoryBlockHead = temp->next;
-        free(temp->memory);
-        free(temp);
-        temp = MemoryBlockHead;
-    }
-    return ((!MemoryBlockHead) ? 1 : 0);
+    if (!block)
+        return NULL;
+    void *reallocMemory = realloc(ptr, size);
+    if (!reallocMemory)
+        return NULL;
+    block->size = size;
+    block->memory = reallocMemory;
+    return reallocMemory;
 }
 
 LeakInfo *MGetLeaks(void)
