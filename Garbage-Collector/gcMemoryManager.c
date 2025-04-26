@@ -3,7 +3,9 @@
 #include <stdlib.h>
 
 // Globals and MACROS
-#define GC_MALLOC(ptr, size) gcMalloc((void**)&(ptr), size)
+#define GC_MALLOC(ptr, size) gcMalloc((void **)&(ptr), size)
+#define GC_CALLOC(ptr, size, typeSize) gcCalloc((void **)&(ptr), size, typeSize)
+#define GC_TRACK(second, first) gcTrack((void **)&(second), (void **)&first)
 
 typedef struct AssignedPtrNode
 {
@@ -25,7 +27,7 @@ GCMemoryManager *gcMemoryHead = NULL, *gcMemoryTail = NULL;
 AssignedPtrNode *getAssignedPtrNode(void);
 GCMemoryManager *getGCMemoryBlock(void);
 void insertInAssignedPtrStack(GCMemoryManager *, void **);
-void gcTrack(void *, void *);
+void gcTrack(void **, void **);
 void gcUnTrack(void *);
 void gcRun(void);
 void gcMalloc(void **, size_t);
@@ -79,15 +81,47 @@ void gcMalloc(void **ptr, size_t size)
     if (!*ptr)
         return;
 
+    gcMemoryBlock->memory = *ptr;
     if (!gcMemoryHead)
-    {
-        gcMemoryBlock->memory = *ptr;
-        gcMemoryHead = gcMemoryTail = gcMemoryBlock;
-    }
+        gcMemoryHead = gcMemoryBlock;
     else
-    {
         gcMemoryTail->next = gcMemoryBlock;
-        gcMemoryTail = gcMemoryBlock;
-    }
+    gcMemoryTail = gcMemoryBlock;
     insertInAssignedPtrStack(gcMemoryBlock, ptr);
+}
+
+void gcCalloc(void **ptr, size_t size, size_t typeSize)
+{
+    if (!size)
+        return;
+
+    GCMemoryManager *gcMemoryBlock = getGCMemoryBlock();
+    if (!gcMemoryBlock)
+        return;
+
+    *ptr = calloc(size, typeSize);
+    if (!*ptr)
+        return;
+
+    gcMemoryBlock->memory = *ptr;
+    if (!gcMemoryHead)
+        gcMemoryHead = gcMemoryTail = gcMemoryBlock;
+    else
+        gcMemoryTail->next = gcMemoryBlock;
+    gcMemoryTail = gcMemoryBlock;
+    insertInAssignedPtrStack(gcMemoryBlock, ptr);
+}
+
+void gcTrack(void **second, void **first)
+{
+    GCMemoryManager *tempGC = gcMemoryHead;
+    AssignedPtrNode *temp = gcMemoryHead->assignedBlock;
+    for (; tempGC->next; tempGC = tempGC->next)
+    {
+        temp = tempGC->assignedBlock;
+        while ((first != temp->assignedPtr) && (temp))
+            temp = temp->next;
+    }
+    if (first == temp->assignedPtr)
+        insertInAssignedPtrStack(tempGC, second);
 }
