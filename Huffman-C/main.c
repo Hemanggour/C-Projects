@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "../Memory-Manager/memoryManager.c"
+#include "../Memory-Manager/memoryManager.h"
 
 #include "./global.h"
 
@@ -49,9 +49,24 @@ void driver()
 int main()
 {
     driver();
-    LeakInfo *leaks = MGetLeaks();
-    for (size_t i = 0; i < leaks->leakCount; i++)
-        printf("%d. addr: %p, size: %zu\n", i + 1, leaks[i].address, leaks[i].size);
+
+    size_t leakCount = 0;
+    LeakInfo *leaks = getLeaks(&leakCount);
+
+    if (leaks)
+    {
+        for (size_t i = 0; i < leakCount; i++)
+        {
+            printf("Leak %zu: Address = %p, Size = %zu bytes\n",
+                i + 1, leaks[i].address, leaks[i].size);
+        }
+
+        MFreeLeakInfo(leaks);
+    }
+    else
+    {
+        printf("No memory leaks detected.\n");
+    }
 
     return EXIT_SUCCESS;
 }
